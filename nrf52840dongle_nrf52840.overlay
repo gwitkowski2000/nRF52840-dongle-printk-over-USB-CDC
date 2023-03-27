@@ -1,0 +1,42 @@
+/*
+ * Copyright (c) 2021 Nordic Semiconductor ASA
+ *
+ * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+ */
+
+ / {
+	chosen {
+		zephyr,entropy = &rng;
+		zephyr,console = &cdc_acm_uart0;
+	};
+/*
+	pwmleds {
+		pwm_led3: pwm_led_3 {
+			pwms = <&pwm0 12>;
+		};
+	};
+*/
+
+	buttons {
+		compatible = "gpio-keys";
+		rst_button0: rst_button_0 {
+			gpios = <&gpio0 19 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Reset button";
+		};
+	};
+
+	aliases {
+		rst0 = &rst_button0;
+	};
+};
+
+
+&zephyr_udc0 {
+	compatible = "nordic,nrf-usbd";
+	status = "okay";
+	label = "USBD";
+	cdc_acm_uart0: cdc_acm_uart0 {
+		compatible = "zephyr,cdc-acm-uart";
+		label = "CDC_ACM_0";
+	};
+};
